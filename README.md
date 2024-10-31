@@ -1,6 +1,6 @@
 # RL Robotics Speedrun
 
-Speed-running solving robot manipulation tasks. Goal is to simply solve a list of tasks as fast as possible (attain 99% eval success rate) with RL + fixed dense rewards starting from weights from scratch.
+Speed-running solving robot manipulation tasks. Goal is to simply solve a list of tasks as fast as possible with RL + fixed dense rewards starting from weights from scratch.
 
 
 Inspired by the [great speedrunning work done for LLMs by Jordan et. al](https://github.com/KellerJordan/modded-nanogpt)
@@ -17,17 +17,18 @@ cd rl-robotics-speedrun
 pip install -e .
 ```
 
-To test your installation just run
+## Benchmarking 
 
+To run the benchmark `cd` into one of the folders and run the script.sh file.
+
+This by default logs results to tensorboard and wandb. You will need to setup a [wandb account](https://wandb.ai/). Wandb helps better display aggregated results. 
+
+```bash
+cd records/baseline && bash script.sh
 ```
-python baseline/ppo.py -e PickCube-v1 --num-envs 128
-```
 
-## Tasks and Records
+The current standard is to run PPO initialized with random weights on 10 different seeds. By default this does not record evaluation videos. Remove `--no-capture_video` to record videos. Remove `--track` to not use wandb.
 
-Each time there is an improvement in training time for a task it is updated here:
+Results on 4090: [Wandb Link](https://wandb.ai/stonet2000/PPO-ManiSkill-GPU-SpeedRun/workspace?nw=qgul0t4vstq)
 
-| Task | Best Time | Hardware | Date | Code |
-|------|-----------|----------|------|------|
-| PickCube-v1 (state) | 60.0s | RTX 4090 | 2024-10-31 | [code](records/10312024_cudagraphs/) |
-| PickCube-v1 (vision) | -- | RTX 4090 | 2024-10-31 | [code](records/10312024_cudagraphs/) |
+Current best is `records/10312024_cudagraphs` which is standard PPO + GPU Simulation, very few steps per environment during rollouts, and cudagraphs enabled based on [leanrl](https://github.com/pytorch-labs/LeanRL/). Achieves >= 95% success rate after ~80s

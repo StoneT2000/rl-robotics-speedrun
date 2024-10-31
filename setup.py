@@ -8,12 +8,14 @@ setup(
         "wandb",
         "tqdm",
         "mani_skill",
-        "tensorboard"
+        "tensorboard",
+        "torchrl",
+        "tensordict"
     ],
     author="Stone Tao",
     description="Speed-running solving robot manipulation tasks",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/StoneT2000/rl-robotics-speedrun",
-    python_requires=">=3.11",
+    python_requires=">=3.10",
 )

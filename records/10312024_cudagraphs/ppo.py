@@ -46,6 +46,8 @@ class Args:
     """the wandb's project name"""
     wandb_entity: Optional[str] = None
     """the entity (team) of wandb's project"""
+    wandb_group: str = "PPO"
+    """the group of the run for wandb"""
     capture_video: bool = True
     """whether to capture videos of the agent performances (check out `videos` folder)"""
     save_model: bool = True
@@ -62,7 +64,7 @@ class Args:
     """the type of environment vectorization to use"""
     num_envs: int = 512
     """the number of parallel environments"""
-    num_eval_envs: int = 16
+    num_eval_envs: int = 8
     """the number of parallel evaluation environments"""
     partial_reset: bool = True
     """whether to let parallel environments reset upon termination instead of truncation"""
@@ -356,7 +358,7 @@ if __name__ == "__main__":
                 config=config,
                 name=run_name,
                 save_code=True,
-                group="PPO",
+                group=args.wandb_group,
                 tags=["ppo", "walltime_efficient"]
             )
         writer = SummaryWriter(f"runs/{run_name}")
