@@ -43,4 +43,5 @@ All results on 4090: [Wandb Link](https://wandb.ai/stonet2000/PPO-ManiSkill-GPU-
 
 All results on L4 (Google Colab GPU): [Wandb Link](https://wandb.ai/stonet2000/PPO-ManiSkill-GPU-SpeedRun/workspace?nw=i9kpqaqywjd)
 
+Figure of results on 4090 for PickCube-v1:
 ![](./assets/PickCube-v1_4090.png)
