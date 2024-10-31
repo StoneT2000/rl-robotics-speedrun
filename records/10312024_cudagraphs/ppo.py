@@ -64,7 +64,7 @@ class Args:
     """the type of environment vectorization to use"""
     num_envs: int = 512
     """the number of parallel environments"""
-    num_eval_envs: int = 8
+    num_eval_envs: int = 16
     """the number of parallel evaluation environments"""
     partial_reset: bool = True
     """whether to let parallel environments reset upon termination instead of truncation"""
@@ -506,3 +506,4 @@ if __name__ == "__main__":
         logger.add_scalar("time/total_rollout+update_time", cumulative_times["rollout_time"] + cumulative_times["update_time"], global_step)
 
     envs.close()
+    eval_envs.close()
