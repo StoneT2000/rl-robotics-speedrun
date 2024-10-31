@@ -1,6 +1,6 @@
 # RL Robotics Speedrun
 
-Speed-running solving robot manipulation tasks. Goal is to simply solve a list of tasks as fast as possible with RL + fixed dense rewards starting from weights from scratch.
+Speed-running solving robot manipulation tasks in [ManiSkill](https://github.com/haosulab/ManiSkill). Goal is to simply solve a list of tasks as fast as possible with RL + fixed dense rewards starting from weights from scratch.
 
 
 Inspired by the [great speedrunning work done for LLMs by Jordan et. al](https://github.com/KellerJordan/modded-nanogpt)
@@ -27,7 +27,7 @@ This by default logs results to tensorboard and wandb. You will need to setup a 
 cd records/baseline && bash script.sh
 ```
 
-The current standard is to run PPO initialized with random weights on 10 different seeds. By default this does not record evaluation videos. Remove `--no-capture_video` to record videos. Remove `--track` to not use wandb.
+The current standard is to run PPO initialized with random weights on 10 different seeds. By default this does not record evaluation videos. Remove `--no-capture_video` to record videos. Remove `--track` to not use wandb. Each of the 10 runs takes about 2 minutes to run on a 4090.
 
 Results on 4090: [Wandb Link](https://wandb.ai/stonet2000/PPO-ManiSkill-GPU-SpeedRun/workspace?nw=qgul0t4vstq)
 

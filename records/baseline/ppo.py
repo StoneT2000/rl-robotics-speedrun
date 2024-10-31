@@ -46,9 +46,11 @@ class Args:
     """the wandb's project name"""
     wandb_entity: Optional[str] = None
     """the entity (team) of wandb's project"""
+    wandb_group: str = "PPO"
+    """the group of the run for wandb"""
     capture_video: bool = True
     """whether to capture videos of the agent performances (check out `videos` folder)"""
-    save_model: bool = True
+    save_model: bool = False
     """whether to save model into the `runs/{run_name}` folder"""
     evaluate: bool = False
     """if toggled, only runs evaluation with the given model checkpoint and saves the evaluation trajectories"""
@@ -62,7 +64,7 @@ class Args:
     """the type of environment vectorization to use"""
     num_envs: int = 512
     """the number of parallel environments"""
-    num_eval_envs: int = 16
+    num_eval_envs: int = 8
     """the number of parallel evaluation environments"""
     partial_reset: bool = True
     """whether to let parallel environments reset upon termination instead of truncation"""
@@ -356,8 +358,8 @@ if __name__ == "__main__":
                 config=config,
                 name=run_name,
                 save_code=True,
-                group="PPO",
-                tags=["ppo", "walltime_efficient"]
+                group=args.wandb_group,
+                tags=["ppo", "walltime_efficient", f"GPU:{torch.cuda.get_device_name()}"]
             )
         writer = SummaryWriter(f"runs/{run_name}")
         writer.add_text(
@@ -424,7 +426,6 @@ if __name__ == "__main__":
     for iteration in pbar:
         agent.eval()
         if iteration % args.eval_freq == 1:
-            print("Evaluating")
             stime = time.perf_counter()
             eval_obs, _ = eval_envs.reset()
             eval_metrics = defaultdict(list)
@@ -437,12 +438,16 @@ if __name__ == "__main__":
                         num_episodes += mask.sum()
                         for k, v in eval_infos["final_info"]["episode"].items():
                             eval_metrics[k].append(v)
-            print(f"Evaluated {args.num_eval_steps * args.num_eval_envs} steps resulting in {num_episodes} episodes")
+            eval_metrics_mean = {}
             for k, v in eval_metrics.items():
                 mean = torch.stack(v).float().mean()
+                eval_metrics_mean[k] = mean
                 if logger is not None:
                     logger.add_scalar(f"eval/{k}", mean, global_step)
-                print(f"eval_{k}_mean={mean}")
+            pbar.set_description(
+                f"success_once: {eval_metrics_mean['success_once']:.2f}, "
+                f"return: {eval_metrics_mean['return']:.2f}"
+            )
             if logger is not None:
                 eval_time = time.perf_counter() - stime
                 cumulative_times["eval_time"] += eval_time
