@@ -41,6 +41,6 @@ Current best is `records/10312024_cudagraphs` which is standard PPO + GPU Simula
 
 All results on 4090: [Wandb Link](https://wandb.ai/stonet2000/PPO-ManiSkill-GPU-SpeedRun/workspace?nw=qgul0t4vstq)
 
-All results on L4 (Google Colab GPU): [Wandb Link](https://wandb.ai/stonet2000/PPO-ManiSkill-GPU-SpeedRun/workspace?nw=4y9yisg3h9e)
+All results on L4 (Google Colab GPU): [Wandb Link](https://wandb.ai/stonet2000/PPO-ManiSkill-GPU-SpeedRun/workspace?nw=i9kpqaqywjd)
 
 ![](./assets/PickCube-v1_4090.png)
